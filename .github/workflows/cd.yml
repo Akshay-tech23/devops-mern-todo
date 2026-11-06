@@ -1,22 +1,33 @@
+
 name: MERN CD
 
 on:
   push:
     branches: [main]
+
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Deploy via SSH
-          uses: appleboy/ssh-action@v0.1.6
-          with:
-            host: ${{ secrets.EC2_HOST }}
-            username: ${{ secrets.EC2_USER }}
-            key: ${{ secrets.EC2_SSH_KEY }}
-            script: |
-              cd devops-mern-todo/
-              git pull origin main
-              docker-compose down
-              docker-compose up --build -d
-              
-       
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+
+            cd ~/devops-mern-todo
+
+            echo "Pulling latest code..."
+            git pull --ff-only origin main
+
+            echo "Building and restarting containers..."
+            docker-compose up --build -d
+
+            echo "Checking deployment status..."
+            docker-compose ps
+
+            echo "Deployment completed successfully."
