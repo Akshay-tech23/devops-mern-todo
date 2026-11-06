@@ -33,7 +33,7 @@ const styles = {
   brand: {
     fontSize: '28px',
     fontWeight: '800',
-    color: '#a78bfa',
+    color: '#60a5fa',
     letterSpacing: '-1px',
   },
 
@@ -47,7 +47,7 @@ const styles = {
   },
 
   eyebrow: {
-    color: '#a78bfa',
+    color: '#60a5fa',
     fontSize: '12px',
     letterSpacing: '2px',
     fontWeight: '700',
@@ -131,7 +131,7 @@ const styles = {
   },
 
   addButton: {
-    background: '#8b5cf6',
+    background: '#2563eb',
     color: '#fff',
     border: 'none',
     borderRadius: '10px',
@@ -297,9 +297,9 @@ function App() {
     padding: '10px 17px',
     borderRadius: '8px',
     border: '1px solid',
-    borderColor: selected ? '#8b5cf6' : '#35415d',
-    background: selected ? '#35265b' : 'transparent',
-    color: selected ? '#c4b5fd' : '#94a3b8',
+    borderColor: selected ? '#2563eb' : '#35415d',
+    background: selected ? '#172554' : 'transparent',
+    color: selected ? '#bfdbfe' : '#94a3b8',
     cursor: 'pointer',
     fontSize: '12px',
     fontWeight: selected ? '700' : '500',
@@ -354,8 +354,8 @@ function App() {
         }
 
         input:focus {
-          border-color: #8b5cf6 !important;
-        }
+  border-color: #60a5fa !important;
+}
 
         @media (max-width: 700px) {
           .taskflow-page {
@@ -426,7 +426,7 @@ function App() {
             <h1 style={styles.heading}>
               Stay focused.
               <br />
-              <span style={{ color: '#a78bfa' }}>
+              <span style={{ color: '#60a5fa' }}>
                 Get things done.
               </span>
             </h1>
@@ -599,7 +599,7 @@ function App() {
                     style={{
                       fontSize: '38px',
                       marginBottom: '12px',
-                      color: '#a78bfa',
+                      color: '#60a5fa',
                     }}
                   >
                     ✦
@@ -634,7 +634,7 @@ function App() {
                         borderRadius: '6px',
                         border: '1px solid #64748b',
                         background: task.completed
-                          ? '#8b5cf6'
+                          ? '#2563eb'
                           : 'transparent',
                         color: '#fff',
                         cursor: 'pointer',
@@ -701,7 +701,7 @@ function App() {
               padding: '30px 0 15px',
             }}
           >
-            <strong style={{ color: '#a78bfa' }}>
+            <strong style={{ color: '#60a5fa' }}>
               TaskFlow
             </strong>
             {' '}· MERN Stack · Dockerized Deployment
