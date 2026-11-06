@@ -27,11 +27,9 @@ jobs:
           --health-retries 10
 
     steps:
-      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
@@ -39,7 +37,6 @@ jobs:
           cache: npm
           cache-dependency-path: backend/package-lock.json
 
-      # Step 3: Wait for MongoDB
       - name: Wait for MongoDB
         run: |
           until nc -z localhost 27017; do
@@ -48,21 +45,18 @@ jobs:
           done
           echo "MongoDB is ready!"
 
-      # Step 4: Install dependencies
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm ci
 
-      # Step 5: Seed MongoDB
       - name: Seed MongoDB
         working-directory: ./backend
         env:
-            MONGO_URI: mongodb://localhost:27017/todo
+          MONGO_URI: ${{ secrets.MONGO_URI }}
         run: node seedTasksData.js
 
-      # Step 6: Run backend tests
       - name: Run backend tests
         working-directory: ./backend
         env:
-          MONGO_URI: mongodb://localhost:27017/todo
+          MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm test
