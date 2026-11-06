@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jest": "^30.0.5",
+    "mongoose": "^8.17.1"
+  },
+  "scripts": {
+    "test": "jest",
+    "prod": "node index.js"
+  },
+  "devDependencies": {
+    "just": "^0.1.8",
+    "supertest": "^7.3.1"
+  }
+}
