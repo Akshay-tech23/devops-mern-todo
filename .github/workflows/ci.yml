@@ -3,12 +3,16 @@ name: MERN CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   test:
+    name: Backend CI Tests
     runs-on: ubuntu-latest
 
     services:
@@ -16,18 +20,26 @@ jobs:
         image: mongo:latest
         ports:
           - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand(\"ping\").ok'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      # Step 2: Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: npm
           cache-dependency-path: backend/package-lock.json
 
+      # Step 3: Wait for MongoDB
       - name: Wait for MongoDB
         run: |
           until nc -z localhost 27017; do
@@ -36,16 +48,19 @@ jobs:
           done
           echo "MongoDB is ready!"
 
+      # Step 4: Install dependencies
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm ci
 
+      # Step 5: Seed MongoDB
       - name: Seed MongoDB
         working-directory: ./backend
         env:
           MONGO_URI: mongodb://localhost:27017/todo
-        run: node seedTaskData.js
+        run: node seedTasksData.js
 
+      # Step 6: Run backend tests
       - name: Run backend tests
         working-directory: ./backend
         env:
