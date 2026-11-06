@@ -57,7 +57,7 @@ jobs:
       - name: Seed MongoDB
         working-directory: ./backend
         env:
-          MONGO_URI: mongodb://localhost:27017/todo
+            MONGO_URI: mongodb://localhost:27017/todo
         run: node seedTasksData.js
 
       # Step 6: Run backend tests
